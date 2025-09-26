@@ -14,18 +14,20 @@ dotenv.config();
 const app = express();
 app.use(express.json());
 
+// Root route
+app.get('/', (req, res) => {
+  res.json({ message: 'PermitFlow Backend API is running' });
+});
+
 // MongoDB Connection
-mongoose.connect(process.env.MONGO_URI, {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-})
+mongoose.connect(process.env.MONGO_URI)
 .then(() => {
   console.log('MongoDB connected');
   console.log('Connected to DB:', mongoose.connection.name);
 })
 .catch(err => {
   console.error('MongoDB connection error:', err);
-  process.exit(1);
+  // process.exit(1); // Removed to allow server to run without DB
 });
 
 // Routes
